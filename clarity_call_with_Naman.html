@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Solutions Consultant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #121212;
+            color: #eeeeee;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Left Panel */
+        .left-panel {
+            flex: 0 0 45%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid rgba(238, 238, 238, 0.05);
+        }
+
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(238, 238, 238, 0.04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .profile-section {
+            text-align: left;
+            z-index: 2;
+            animation: fadeInUp 0.8s ease-out;
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .profile-image {
+            width: 280px;
+            height: 280px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            padding: 6px;
+            justify-content: center;
+            font-size: 5rem;
+            color: #eeeeee;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(238, 238, 238, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .profile-image:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+            border-color: rgba(238, 238, 238, 0.15);
+        }
+
+        .profile-image img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 22px;
+        }
+
+        .profile-name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #eeeeee 0%, #cccccc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: left;
+        }
+
+        .profile-title {
+            font-size: 1.2rem;
+            color: rgba(238, 238, 238, 0.8);
+            margin-bottom: 2rem;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .profile-description {
+            color: rgba(238, 238, 238, 0.75);
+            font-size: 1rem;
+            line-height: 1.8;
+            text-align: left;
+        }
+
+        /* Right Panel */
+        .right-panel {
+            flex: 1;
+            padding: 3rem;
+            background: linear-gradient(135deg, #121212 0%, #0f0f0f 100%);
+            overflow-y: auto;
+            border-left: 1px solid rgba(238, 238, 238, 0.03);
+        }
+
+        .booking-section {
+            background: rgba(238, 238, 238, 0.02);
+            border: 1px solid rgba(238, 238, 238, 0.08);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .booking-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #eeeeee;
+        }
+
+        .booking-subtitle {
+            color: rgba(238, 238, 238, 0.7);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .call-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(238, 238, 238, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(238, 238, 238, 0.05);
+        }
+
+        .call-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #eeeeee;
+        }
+
+        .call-info p {
+            color: rgba(238, 238, 238, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .call-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #eeeeee;
+        }
+
+        .book-button {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #eeeeee 0%, #cccccc 100%);
+            color: #121212;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .book-button:hover::before {
+            left: 100%;
+        }
+
+        .book-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(238, 238, 238, 0.2);
+        }
+
+        .book-button:active {
+            transform: translateY(0);
+        }
+
+        .context-section {
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .context-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #eeeeee;
+        }
+
+        .context-content {
+            color: rgba(238, 238, 238, 0.8);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .benefits-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .benefits-list li {
+            padding: 0.8rem 0;
+            color: rgba(238, 238, 238, 0.8);
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .benefits-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #eeeeee;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        /* Loading animation for button */
+        .book-button.loading {
+            pointer-events: none;
+        }
+
+        .book-button.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid #121212;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-panel {
+                flex: none;
+                padding: 2rem;
+                min-height: auto;
+            }
+
+            .right-panel {
+                padding: 2rem;
+            }
+
+            .profile-image {
+                width: 150px;
+                height: 150px;
+                font-size: 3rem;
+            }
+
+            .profile-name {
+                font-size: 1.5rem;
+            }
+
+            .call-details {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+        }
+
+        /* Subtle scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(238, 238, 238, 0.1);
+            z-index: 1000;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #eeeeee, #cccccc);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <div class="container">
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <div class="profile-section">
+                <div class="profile-image">
+                    <img src="/Assets/Profile Picture.jpg" alt="Myself">
+                </div>
+                <h1 class="profile-name">Naman Kumar</h1>
+                <p class="profile-title">AI Solutions Consultant</p>
+                <p class="profile-description">
+                    I help founders by bridging the gap between complex AI terminology and practical business solutions. I help them get clarity about the right AI solution for them and set realistic expectations by understanding their business requirements.
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <!-- Booking Section -->
+            <div class="booking-section">
+                <h2 class="booking-title">Book a Clarity Call</h2>
+                <p class="booking-subtitle">Get personalized guidance on AI solutions for your business</p>
+                
+                <div class="call-details">
+                    <div class="call-info">
+                        <h3>40-Minute Clarity Call</h3>
+                        <p>One-on-one consultation to identify the right AI solution for your business needs</p>
+                    </div>
+                    <div class="call-price">$220</div>
+                </div>
+
+                <button class="book-button" onclick="handleBooking()">
+                    Book Your Call Now
+                </button>
+            </div>
+
+            <!-- Context Section -->
+            <div class="context-section">
+                <h2 class="context-title">Why I Do Consultation</h2>
+                <div class="context-content">
+                    <p>The AI landscape is filled with confusing terminology - AI automation, AI agents, multi-agent systems - all pointing to similar concepts but creating confusion for business founders. My understanding as a developer allows me to translate technical possibilities into practical business solutions, helping you avoid costly mistakes and focus on high-impact outcomes.</p>
+                    
+                    <p></p>
+
+                    <ul class="benefits-list">
+                        <li>Clarity about the solution that suits you and how it does.</li>
+                        <li>Realistic expectations based on current AI capabilities</li>
+                        <li>Actionable roadmap tailored to your specific business challenges</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = window.scrollY;
+            const progress = (scrolled / scrollable) * 100;
+            scrollProgress.style.width = progress + '%';
+        });
+
+        // Booking button functionality
+        function handleBooking() {
+            const button = document.querySelector('.book-button');
+            button.classList.add('loading');
+            button.innerHTML = '';
+            
+            // Simulate loading then redirect
+            setTimeout(() => {
+                button.classList.remove('loading');
+                button.innerHTML = 'Redirecting...';
+                
+                // Redirect to actual booking page
+                setTimeout(() => {
+                    window.open('https://cal.com/namankumar/40min-clarity-call', '_blank');
+                    button.innerHTML = 'Book Your Call Now';
+                }, 500);
+            }, 1000);
+        }
+
+        // Add subtle animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.booking-section, .context-section');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
